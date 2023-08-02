@@ -48,7 +48,7 @@ jobs:
         run: gem install report_builder  # Install ReportBuilder gem if not already installed 
 
       - name: Run Hooks
-        run: ruby test/features/support/hooks.rb
+        run: ruby features/support/hooks.rb
 
       - name: Upload test report
         if: always() # Always run this step, even if previous steps fail
