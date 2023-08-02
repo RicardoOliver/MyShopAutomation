@@ -44,15 +44,12 @@ jobs:
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
 
-      - name: Install Dependencies
-        run: gem install report_builder  # Install ReportBuilder gem if not already installed 
-
-      - name: Run Hooks
-        run: ruby features/support/hooks.rb
-
-      - name: Upload test report
-        if: always() # Always run this step, even if previous steps fail
-        uses: actions/upload-artifact@v2
-        with:
-          name: cucumber-report
-          path: cucumber_report.json
+      - name: Passo 5 - Armazenar relatório HTML
+        uses: actions/upload-artifact@v3
+        # Expressão condicional para que sempre seja executado independentemente dos resultados dos steps anteriores
+        if: ${{ always() }}
+        with: 
+          name: reports
+          path: ./log/report.json
+          # Armazena o relatório HTML por 30 dias
+          retention-days: 30
