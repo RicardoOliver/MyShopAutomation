@@ -1,0 +1,25 @@
+# Define the default option for Cucumber test execution
+default: -p json -p pretty -p html -p firefox -p homolog
+
+# Define the pretty and colored text report format
+pretty: --format pretty
+
+# Define the progress format (dots) displayed in the console
+progress: --format progress
+
+# Define the JSON report format and specify the location of the report file
+json: --format json --out=log/report.json
+
+# Define the 'prod' profile configuration
+prod: AMBIENTE=prod
+
+# Define the 'html' profile configuration
+homolog: AMBIENTE=homolog
+
+# Define the 'chrome' profile configuration
+chrome: BROWSER=chrome
+
+# Define the 'firefox' profile configuration
+firefox: BROWSER=firefox
+
+html:  --format html --out=results/report.html

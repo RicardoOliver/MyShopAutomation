@@ -1,0 +1,48 @@
+name: Pipeline Testes Automatizados Web Ruby
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 9,11,15,18 * * 1,2,3,4,5"
+
+# permite também executar esse workflow manualmente na aba "Actions" do GitHub
+  workflow_dispatch:
+
+jobs:
+  automacao-web-ruby:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Passo 1 - Obter cópia do código-fonte do repositório
+      uses: actions/checkout@v3
+
+    - name: Passo 2 - Instalar Ruby e Dependências
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1.2'
+        # Executa o comando bundle install e armazena as gems instaladas automaticamente
+        bundler-cache: true
+
+    - name: Passo 3 - Instalar dependências do projeto (bundle install)
+      run: |
+        gem install bundler
+        bundle install
+        
+
+    - name: Passo 4 - Executar testes em modo headless e Gerar relatório HTML
+      run: bundle exec cucumber
+
+    - name: Passo 5 - Armazenar relatório HTML
+      uses: actions/upload-artifact@v3
+      # Expressão condicional para que sempre seja executado independentemente dos resultados dos steps anteriores
+      if: ${{ always() }}
+      with: 
+        name: reports
+        path: ./reports/report.html
+        # Armazena o relatório HTML por 30 dias
+        retention-days: 30

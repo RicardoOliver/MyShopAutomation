@@ -1,0 +1,11 @@
+source 'http://rubygems.org'
+
+gem 'capybara'
+gem 'cucumber'
+gem 'faker'
+gem 'rake'
+gem 'rspec'
+gem 'rubocop'
+gem 'selenium-webdriver'
+gem 'site_prism'
+gem 'report_builder'
