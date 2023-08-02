@@ -32,9 +32,6 @@ jobs:
       - name: Run Cucumber
         run: bundle exec cucumber
 
-      - name: Run Capybara with Selenium
-        run: bundle exec cucumber -p selenium
-
       - name: Install additional gems
         run: |
           gem install faker site_prism report_builder
