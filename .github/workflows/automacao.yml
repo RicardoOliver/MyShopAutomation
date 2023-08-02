@@ -49,7 +49,7 @@ jobs:
 
       - name: Generate Report
         run: |
-         ruby path/to/generate_report.rb
+         ruby test\features\support\hooks.rb
 
       - name: Upload test report
         if: always() # Always run this step, even if previous steps fail
