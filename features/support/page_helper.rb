@@ -1,7 +1,9 @@
-Dir[File.join(File.dirname(__FILE__), "../pages/*_page.rb")].each {|file| require file}
+# frozen_string_literal: true
 
+# Top-level documentation comment for the module Pages
 module Pages
-  def user
-      @user ||= User.new
+  # Helper method to create a new User instance
+  def self.user
+    @user ||= User.new
   end
 end
