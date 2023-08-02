@@ -44,7 +44,7 @@ jobs:
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
 
-      - name: Passo 5 - Armazenar relatório HTML
+      - name: Passo - Armazenar relatório HTML
         uses: actions/upload-artifact@v3
         # Expressão condicional para que sempre seja executado independentemente dos resultados dos steps anteriores
         if: ${{ always() }}
