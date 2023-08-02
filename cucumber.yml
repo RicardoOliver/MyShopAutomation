@@ -1,4 +1,5 @@
-# Define the default option for Cucumber test execution
+# cucumber.yml
+
 default: -p json -p pretty -p html -p firefox -p homolog
 
 # Define the pretty and colored text report format
@@ -22,4 +23,8 @@ chrome: BROWSER=chrome
 # Define the 'firefox' profile configuration
 firefox: BROWSER=firefox
 
-html:  --format html --out=results/report.html
+# Define the 'headless' profile configuration
+headless: BROWSER=chrome,firefox
+
+# Define the HTML report format and specify the location of the report file
+html: --format html --out=results/report.html
