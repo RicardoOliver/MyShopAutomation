@@ -1,4 +1,4 @@
-name: Pipeline Testes Automatizados Web Ruby
+name: Test Workflow
 
 on:
   push:
@@ -7,42 +7,51 @@ on:
   pull_request:
     branches:
       - main
-  schedule:
-    - cron: "0 9,11,15,18 * * 1,2,3,4,5"
-
-# permite também executar esse workflow manualmente na aba "Actions" do GitHub
-  workflow_dispatch:
 
 jobs:
-  automacao-web-ruby:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Passo 1 - Obter cópia do código-fonte do repositório
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Passo 2 - Instalar Ruby e Dependências
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.2.2'
-        # Executa o comando bundle install e armazena as gems instaladas automaticamente
-        bundler-cache: true
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.x # Especifique a versão desejada, ex: 2.7
 
-    - name: Passo 3 - Instalar dependências do projeto (bundle install)
-      run: |
-        gem install bundler
-        bundle install
-        
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
 
-    - name: Passo 4 - Executar testes em modo headless e Gerar relatório HTML
-      run: bundle exec cucumber
+      - name: Run Rubocop
+        run: bundle exec rubocop
 
-    - name: Passo 5 - Armazenar relatório HTML
-      uses: actions/upload-artifact@v3
-      # Expressão condicional para que sempre seja executado independentemente dos resultados dos steps anteriores
-      if: ${{ always() }}
-      with: 
-        name: reports
-        path: ./reports/report.html
-        # Armazena o relatório HTML por 30 dias
-        retention-days: 30
+      - name: Run RSpec
+        run: bundle exec rspec
+
+      - name: Run Cucumber
+        run: bundle exec cucumber
+
+      - name: Run Capybara with Selenium
+        run: bundle exec cucumber -p selenium
+
+      - name: Install additional gems
+        run: |
+          gem install faker site_prism report_builder
+
+      - name: Run Cucumber with Faker and SitePrism
+        run: bundle exec cucumber -p site_prism
+
+      - name: Generate test report
+        if: always() # Always run this step, even if previous steps fail
+        run: bundle exec report_builder --json-folder=tmp/cucumber && mv tmp/cucumber/report.json cucumber_report.json
+
+      - name: Upload test report
+        if: always() # Always run this step, even if previous steps fail
+        uses: actions/upload-artifact@v2
+        with:
+          name: cucumber-report
+          path: cucumber_report.json
