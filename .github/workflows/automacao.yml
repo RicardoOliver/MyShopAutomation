@@ -44,9 +44,12 @@ jobs:
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
 
-      - name: Generate test report
-        if: always() # Always run this step, even if previous steps fail
-        run: bundle exec cucumber
+      - name: Install Dependencies
+        run: gem install report_builder  # Install ReportBuilder gem if not already installed 
+
+      - name: Generate Report
+        run: |
+         ruby path/to/generate_report.rb
 
       - name: Upload test report
         if: always() # Always run this step, even if previous steps fail
