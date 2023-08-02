@@ -37,7 +37,7 @@ jobs:
           gem install faker site_prism report_builder
 
       - name: Run Cucumber with Faker and SitePrism
-        run: bundle exec cucumber -p site_prism
+        run: bundle exec cucumber
 
       - name: Generate test report
         if: always() # Always run this step, even if previous steps fail
