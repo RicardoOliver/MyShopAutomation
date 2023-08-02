@@ -7,6 +7,11 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+    - cron: "0 9,11,15,18 * * 1,2,3,4,5"
+
+# permite também executar esse workflow manualmente na aba "Actions" do GitHub
+  workflow_dispatch:
 
 jobs:
   test:
