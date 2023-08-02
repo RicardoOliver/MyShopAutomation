@@ -41,7 +41,7 @@ jobs:
 
       - name: Generate test report
         if: always() # Always run this step, even if previous steps fail
-        run: bundle exec report_builder --json-folder=tmp/cucumber && mv tmp/cucumber/report.json cucumber_report.json
+        run: bundle exec cucumber
 
       - name: Upload test report
         if: always() # Always run this step, even if previous steps fail
