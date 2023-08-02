@@ -24,7 +24,7 @@ jobs:
     - name: Passo 2 - Instalar Ruby e Dependências
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.1.2'
+        ruby-version: '3.2.2'
         # Executa o comando bundle install e armazena as gems instaladas automaticamente
         bundler-cache: true
 
