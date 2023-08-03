@@ -8,7 +8,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 6,9,12,15 * * 1,2,3,4,5"
+    - cron: "0 9,12,15,18 * * 1,2,3,4,5"
 
 # permite também executar esse workflow manualmente na aba "Actions" do GitHub
   workflow_dispatch:
