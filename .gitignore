@@ -1,0 +1,6 @@
+ Gemfile.lock
+.DS_Store
+report/*.html
+report/*.json
+report/screenshots/test_falhou/*.png
+report/screenshots/test_passou/*.png
