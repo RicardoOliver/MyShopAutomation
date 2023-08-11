@@ -21,7 +21,7 @@ Este é um projeto de testes automatizados utilizando as seguintes gems:
 
 ## Baixar o projeto do GitHub
 
-1. Clone este repositório: `git clone https://github.com/bradoctech/auditoria-mt-qa.git`
+1. Clone este repositório: `git clone https://github.com/RicardoOliver/MyShopAutomation.git`
 
 ## Instalação das gems
 
