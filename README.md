@@ -1,6 +1,5 @@
 # MyShopAutomation
 
-# auditoria-mt-qa
 # Projeto de Testes Automatizados
 
 Este é um projeto de testes automatizados utilizando as seguintes gems:
