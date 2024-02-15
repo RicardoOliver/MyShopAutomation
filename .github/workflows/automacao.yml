@@ -47,12 +47,9 @@ jobs:
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
 
-      - name: Passo - Armazenar relatório HTML
-        uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with: 
-          name: cucumber-html-report
-          path: results/report.html
-
-      - name: Generate HTML report
-        run: bundle exec cucumber --format html --out=results/report.html
+      - name: Generate HTML report with ReportBuilder
+        run: |
+          REPORT_TITLE="Relatório de Testes"
+          REPORT_PATH="results/report.html"
+          REPORT_BUILDER_PATH="results"
+          report-builder --json-path=results/report.json --report-path=$REPORT_BUILDER_PATH --report-title="$REPORT_TITLE" --color --report-logs
