@@ -46,7 +46,7 @@ jobs:
 
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
-
+       #gerar report com ReportBuilder
       - name: Generate HTML report with ReportBuilder
         run: |
           REPORT_TITLE="Relatório de Testes"
