@@ -49,13 +49,10 @@ jobs:
 
       - name: Passo - Armazenar relatório HTML
         uses: actions/upload-artifact@v3
-        # Expressão condicional para que sempre seja executado independentemente dos resultados dos steps anteriores
         if: ${{ always() }}
         with: 
-          name: reports
-          path: ./log/report.json
-          # Armazena o relatório HTML por 30 dias
-          retention-days: 30
-          
+          name: cucumber-html-report
+          path: results/report.html
+
       - name: Generate HTML report
         run: bundle exec cucumber --format html --out=results/report.html
