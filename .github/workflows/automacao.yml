@@ -51,5 +51,10 @@ jobs:
         with: 
           name: reports
           path: ./log/report.json
-          # Armazena o relatório HTML por 30 dias
+           # Armazena o relatório HTML por 30 dias
           retention-days: 30
+          
+      - name: Generate HTML report
+        run: cucumber --format html --out=report.html
+         
+     
