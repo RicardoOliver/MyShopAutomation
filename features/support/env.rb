@@ -23,10 +23,12 @@ CONFIG = YAML.load_file(File.dirname(__FILE__) + "/ambientes/#{AMBIENTE}.yml")
 # Configura o tipo de browser
 Capybara.register_driver :selenium do |app|
   if BROWSER.eql?('chrome')
-    options = Selenium::WebDriver::Chrome::Options.new(args: ['--start-fullscreen', '--disable-infobars', '--headless'])
+    options = Selenium::WebDriver::Chrome::Options.new(args: ['--start-fullscreen', '--disable-infobars'])
+    #options = Selenium::WebDriver::Chrome::Options.new(args: ['--start-fullscreen', '--disable-infobars', '--headless'])
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
   elsif BROWSER.eql?('firefox')
-    options = Selenium::WebDriver::Firefox::Options.new(args: ['--start-fullscreen', '--disable-infobars', '--headless'])
+    options = Selenium::WebDriver::Firefox::Options.new(args: ['--start-fullscreen', '--disable-infobars'])
+    #options = Selenium::WebDriver::Firefox::Options.new(args: ['--start-fullscreen', '--disable-infobars', '--headless'])
     Capybara::Selenium::Driver.new(app, browser: :firefox, options: options)
   end
 end
@@ -39,3 +41,13 @@ end
 
 # Configura o tempo maximo de espera
 Capybara.default_max_wait_time = 60
+
+# Maximize browser window
+Before do
+  page.driver.browser.manage.window.maximize
+end
+
+# fechar o browser apos o teste
+#After do
+# Capybara.current_session.driver.quit
+#end
