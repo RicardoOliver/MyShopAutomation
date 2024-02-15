@@ -30,7 +30,7 @@ at_exit do
     config.input_path = "log/report.json"
     config.report_path = "log/report_#{t}"
     config.report_types = [:html]
-    config.report_title = "My Shop - Testes Automatizados"
+    config.report_title = "Bradoc - Testes Automatizados"
     config.additional_info = @infos
     config.color = "blue"
   end
