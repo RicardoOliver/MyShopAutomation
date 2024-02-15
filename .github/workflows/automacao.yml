@@ -31,6 +31,9 @@ jobs:
           gem install bundler
           bundle install --jobs 4 --retry 3
 
+      - name: Create results directory
+        run: mkdir -p results
+
       - name: Run RSpec
         run: bundle exec rspec
 
@@ -55,6 +58,6 @@ jobs:
           retention-days: 30
           
       - name: Generate HTML report
-        run: cucumber --format html --out=report.html
+        run: cucumber --format html --out=results/report.html
          
      
