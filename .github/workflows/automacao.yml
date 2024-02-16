@@ -28,7 +28,9 @@ jobs:
 
       - name: Install dependencies
         run: |
+          gem install report_builder
           gem install bundler
+          bundle install
           bundle install --jobs 4 --retry 3
 
       - name: Create results directory
@@ -49,8 +51,8 @@ jobs:
 
       - name: Run Tests and Generate Report
         run: |
-         cucumber --format json -o log/report.json
-         continue-on-error: true
+          cucumber --format json -o log/report.json
+        continue-on-error: true
 
       - name: Generate Report
         if: always()
