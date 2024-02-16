@@ -39,10 +39,10 @@ jobs:
 
       - name: Run Cucumber
         run: bundle exec cucumber
-
-      - name: Install additional gems
+      - name: Install additional gems including report_builder
         run: |
-          gem install faker site_prism report_builder
+         gem install faker site_prism report_builder
+         bundle install --jobs 4 --retry 3
 
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
