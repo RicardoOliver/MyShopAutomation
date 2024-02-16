@@ -10,7 +10,7 @@ on:
   schedule:
     - cron: "0 9,12,15,18 * * 1,2,3,4,5"
 
-# permite também executar esse workflow manualmente na aba "Actions" do GitHub
+# Permite também executar esse workflow manualmente na aba "Actions" do GitHub
   workflow_dispatch:
 
 jobs:
@@ -37,16 +37,21 @@ jobs:
       - name: Run RSpec
         run: bundle exec rspec
 
-      - name: Run Cucumber
-        run: bundle exec cucumber
-     
-      - name: Run Cucumber with Faker and SitePrism
-        run: bundle exec cucumber
+      - name: Run Cucumber and export JSON report
+        run: |
+          bundle exec cucumber
+        env:
+          REPORT_JSON: "results/report.json"
 
       - name: Generate HTML report with ReportBuilder
         run: |
-         REPORT_TITLE="Relatório de Testes"
-         REPORT_PATH="results/report.html"
-         REPORT_BUILDER_PATH="results"
-         bundle exec report-builder --json-path=results/report.json --report-path=$REPORT_BUILDER_PATH --report-title="$REPORT_TITLE" --color --report-logs
+          REPORT_TITLE="Relatório de Testes"
+          REPORT_PATH="results/report.html"
+          REPORT_BUILDER_PATH="results"
+          bundle exec report-builder --json-path=$REPORT_JSON --report-path=$REPORT_BUILDER_PATH --report-title="$REPORT_TITLE" --color --report-logs
 
+      - name: Upload JSON report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-reports
+          path: ${{ env.REPORT_JSON }}
