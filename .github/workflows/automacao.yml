@@ -45,7 +45,8 @@ jobs:
 
       - name: Generate HTML report with ReportBuilder
         run: |
-          REPORT_TITLE="Relatório de Testes"
-          REPORT_PATH="results/report.html"
-          REPORT_BUILDER_PATH="results"
-          report-builder --json-path=results/report.json --report-path=$REPORT_BUILDER_PATH --report-title="$REPORT_TITLE" --color --report-logs
+         REPORT_TITLE="Relatório de Testes"
+         REPORT_PATH="results/report.html"
+         REPORT_BUILDER_PATH="results"
+         bundle exec report-builder --json-path=results/report.json --report-path=$REPORT_BUILDER_PATH --report-title="$REPORT_TITLE" --color --report-logs
+
