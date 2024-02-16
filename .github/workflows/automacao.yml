@@ -30,6 +30,7 @@ jobs:
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3
+
       - name: Create results directory
         run: mkdir -p results
 
@@ -42,8 +43,13 @@ jobs:
       - name: Install additional gems
         run: |
           gem install faker site_prism report_builder
+
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
+
+      - name: Generate HTML report
+        run: |
+          bundle exec cucumber --format html --out=results/report.html
 
       - name: Passo - Armazenar relatório HTML
         uses: actions/upload-artifact@v3
@@ -51,6 +57,3 @@ jobs:
         with: 
           name: cucumber-html-report
           path: results/report.html
-
-      - name: Generate HTML report
-        run: bundle exec cucumber --format html --out=results/report.html
