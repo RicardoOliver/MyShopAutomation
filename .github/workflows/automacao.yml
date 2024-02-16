@@ -1,32 +1,59 @@
-name: Run Tests and Generate Report
+name: Test Workflow
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 9,12,15,18 * * 1,2,3,4,5"
+
+# permite também executar esse workflow manualmente na aba "Actions" do GitHub
+  workflow_dispatch:
 
 jobs:
-  test-and-generate-report:
-    runs-on: ubuntu-latest
-    
+  test:
+    runs-on: ubuntu-22.04
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Setup Ruby
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: '2.7' # ou a versão que você está usando
-      
-    - name: Install dependencies
-      run: |
-        gem install bundler
-        bundle install
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Run Tests and Generate Report
-      run: |
-        cucumber --format json -o log/report.json
-      continue-on-error: true
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.0
 
-    - name: Generate Report
-      if: always()
-      run: |
-        t=$(date +"%d-%m-%Y")
-        report-builder --input-path log/report.json --report-path log/report_$t --report-types html --report-title "Bradoc - Testes Automatizados" --additional-info "Dispositivo: WEB, Data do Teste: $t" --color blue
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+
+      - name: Create results directory
+        run: mkdir -p results
+
+      - name: Run RSpec
+        run: bundle exec rspec
+
+      - name: Run Cucumber
+        run: bundle exec cucumber
+
+      - name: Install additional gems
+        run: |
+          gem install faker site_prism report_builder
+
+      - name: Run Cucumber with Faker and SitePrism
+        run: bundle exec cucumber
+
+      - name: Run Tests and Generate Report
+        run: |
+         cucumber --format json -o log/report.json
+         continue-on-error: true
+
+      - name: Generate Report
+        if: always()
+        run: |
+          t=$(date +"%d-%m-%Y")
+          report-builder --input-path log/report.json --report-path log/report_$t --report-types html --report-title "Bradoc - Testes Automatizados" --additional-info "Dispositivo: WEB, Data do Teste: $t" --color blue
