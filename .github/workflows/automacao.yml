@@ -47,9 +47,8 @@ jobs:
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
 
-      - name: Generate HTML report
-        run: |
-          bundle exec cucumber --format html --out=results/report.html
+      - name: Generate Report using ReportBuilder
+        run: bundle exec ruby generate_report.rb # Assumindo que você tenha um script chamado generate_report.rb que gera o relatório usando report_builder
 
       - name: Passo - Armazenar relatório HTML
         uses: actions/upload-artifact@v3
