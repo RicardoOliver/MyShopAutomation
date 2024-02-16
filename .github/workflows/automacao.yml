@@ -48,7 +48,7 @@ jobs:
         run: bundle exec cucumber
 
       - name: Generate Report using ReportBuilder
-        run: bundle exec ruby hooks.rb # Assumindo que você tenha um script chamado generate_report.rb que gera o relatório usando report_builder
+        run: cucumber # Assumindo que você tenha um script chamado generate_report.rb que gera o relatório usando report_builder
 
       - name: Passo - Armazenar relatório HTML
         uses: actions/upload-artifact@v3
