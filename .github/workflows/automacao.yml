@@ -10,7 +10,7 @@ on:
   schedule:
     - cron: "0 9,12,15,18 * * 1,2,3,4,5"
 
-# Permite também executar esse workflow manualmente na aba "Actions" do GitHub
+# permite também executar esse workflow manualmente na aba "Actions" do GitHub
   workflow_dispatch:
 
 jobs:
@@ -30,28 +30,27 @@ jobs:
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3
-
       - name: Create results directory
         run: mkdir -p results
 
       - name: Run RSpec
         run: bundle exec rspec
 
-      - name: Run Cucumber and export JSON report
-        run: |
-          bundle exec cucumber
-        env:
-          REPORT_JSON: "results/report.json"
+      - name: Run Cucumber
+        run: bundle exec cucumber
 
-      - name: Generate HTML report with ReportBuilder
+      - name: Install additional gems
         run: |
-          REPORT_TITLE="Relatório de Testes"
-          REPORT_PATH="results/report.html"
-          REPORT_BUILDER_PATH="results"
-          bundle exec report-builder --json-path=$REPORT_JSON --report-path=$REPORT_BUILDER_PATH --report-title="$REPORT_TITLE" --color --report-logs
+          gem install faker site_prism report_builder
+      - name: Run Cucumber with Faker and SitePrism
+        run: bundle exec cucumber
 
-      - name: Upload JSON report as artifact
+      - name: Passo - Armazenar relatório HTML
         uses: actions/upload-artifact@v3
-        with:
-          name: cucumber-reports
-          path: ${{ env.REPORT_JSON }}
+        if: ${{ always() }}
+        with: 
+          name: cucumber-html-report
+          path: results/report.html
+
+      - name: Generate HTML report
+        run: bundle exec cucumber --format html --out=results/report.html
