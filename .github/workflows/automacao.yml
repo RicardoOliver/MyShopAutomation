@@ -31,13 +31,11 @@ jobs:
 
     - name: Run tests and generate reports
       run: |
-        cucumber -t @Regressao --format json --out log/report/final_report.json
-        cucumber features/spec/criar_conta.feature
-
+        cucumber -t @Regressao --format json --format html --out=log/report.html
+        
     - name: Download report
       uses: actions/upload-artifact@v2
       with:
         name: test_reports
         path: |
-          log/report/final_report.json
           log/report/report.html
