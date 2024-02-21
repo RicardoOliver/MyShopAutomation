@@ -36,6 +36,4 @@ at_exit do
 
   # Gere o relatório de teste usando as opções definidas acima
   ReportBuilder.build_report
-  end
 end
-
