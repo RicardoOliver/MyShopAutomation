@@ -29,12 +29,15 @@ jobs:
     - name: Create log/report directory
       run: mkdir -p log/report
 
-    - name: Run tests and generate JSON report
+    - name: Run tests and generate reports
       run: |
         cucumber -t @Regressao --format json --out log/report/final_report.json
+        ruby features/support/hooks.rb
 
     - name: Download report
       uses: actions/upload-artifact@v2
       with:
-        name: final_report
-        path: log/report/final_report.json
+        name: test_reports
+        path: |
+          log/report/final_report.json
+          log/report/report.html
