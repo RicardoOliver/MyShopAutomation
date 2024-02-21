@@ -33,8 +33,8 @@ jobs:
           bundle install
           bundle install --jobs 4 --retry 3
 
-      - name: Create results directory
-        run: mkdir -p results
+           - name: Create results directory
+            run: mkdir -p log
 
       - name: Run RSpec
         run: bundle exec rspec
@@ -48,6 +48,10 @@ jobs:
 
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
+
+      - name: Run Tests
+        run: |
+          cucumber --format json -o log/report.jsonr
 
       - name: Install dependencies
         run: |
