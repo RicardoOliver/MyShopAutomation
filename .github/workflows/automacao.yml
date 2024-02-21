@@ -34,4 +34,4 @@ jobs:
     - name: Generate YAML report
       run: |
         # Execute o script que gera o relatório YAML usando report_builder
-        cucumber -p features/support/hooks.rb/ --format json --out cucumber.json
+        cucumber -t @Regressao --format json --out log/report/final_report.json
