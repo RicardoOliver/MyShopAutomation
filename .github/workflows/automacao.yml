@@ -26,12 +26,9 @@ jobs:
         gem install bundler
         bundle install
 
-    - name: Run tests
-      run: |
-        # Comando para executar os testes automatizados, por exemplo:
-        bundle exec rspec
+    - name: Create log/report directory
+      run: mkdir -p log/report
 
-    - name: Generate YAML report
+    - name: Run tests and generate JSON report
       run: |
-        # Execute o script que gera o relatório YAML usando report_builder
         cucumber -t @Regressao --format json --out log/report/final_report.json
