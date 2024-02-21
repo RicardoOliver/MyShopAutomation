@@ -10,7 +10,7 @@ on:
   schedule:
     - cron: "0 9,12,15,18 * * 1,2,3,4,5"
 
-# permite também executar esse workflow manualmente na aba "Actions" do GitHub
+  # permite também executar esse workflow manualmente na aba "Actions" do GitHub
   workflow_dispatch:
 
 jobs:
@@ -51,11 +51,10 @@ jobs:
 
       - name: Run Tests
         run: |
-         cucumber --format json -o log/report.json
-         continue-on-error: true
+          cucumber --format json -o log/report.json
 
       - name: Generate Report
         if: always()
         run: |
-         t=$(date +"%d-%m-%Y")
-         report-builder --input-path log/report.json --report-path log/report_$t --report-types html --report-title "Bradoc - Testes Automatizados" --additional-info "Dispositivo: WEB, Data do Teste: $t" --color blue
+          t=$(date +"%d-%m-%Y")
+          report-builder --input-path log/report.json --report-path log/report_$t --report-types html --report-title "Bradoc - Testes Automatizados" --additional-info "Dispositivo: WEB, Data do Teste: $t" --color blue
