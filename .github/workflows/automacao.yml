@@ -60,4 +60,4 @@ jobs:
       - name: Generate Report
         run: |
          t=$(date +"%d-%m-%Y")
-         ruby hooks.rb
+         ruby features/support/hooks.rb
