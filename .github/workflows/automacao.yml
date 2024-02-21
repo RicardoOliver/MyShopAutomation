@@ -32,7 +32,7 @@ jobs:
     - name: Run tests and generate reports
       run: |
         cucumber -t @Regressao --format json --out log/report/final_report.json
-        ruby features/support/hooks.rb
+        features/spec/criar_conta.feature
 
     - name: Download report
       uses: actions/upload-artifact@v2
