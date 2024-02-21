@@ -1,16 +1,13 @@
 # Importe as bibliotecas necessárias
 require 'cucumber'
+require 'report_builder'
 
 # Defina o método After para execução após cada cenário
 After do |scenario|
   scenario_name = scenario.name.gsub(/\s+/, '_').tr('/', '_')
 
-  # Verifica se o cenário falhou e tira uma foto correspondente
-  if scenario.failed?
-    tirar_foto(scenario_name.downcase, 'falhou')
-  else
-    tirar_foto(scenario_name.downcase, 'passou')
-  end
+  # Simula a função de tirar foto (substitua com sua própria lógica)
+  tirar_foto(scenario_name.downcase, scenario.failed? ? 'falhou' : 'passou')
 end
 
 # Defina um bloco de código a ser executado quando o processo terminar
@@ -36,4 +33,10 @@ at_exit do
 
   # Gere o relatório de teste usando as opções definidas acima
   ReportBuilder.build_report
+end
+
+# Método fictício para simular tirar uma foto
+def tirar_foto(nome_cenario, status)
+  # Implemente a lógica real para tirar uma foto do cenário
+  puts "Tirando foto do cenário '#{nome_cenario}' que #{status}"
 end
