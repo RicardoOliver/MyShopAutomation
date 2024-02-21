@@ -1,63 +1,37 @@
-name: Test Workflow
+name: Test and Report
 
 on:
   push:
     branches:
-      - main
+      - main  # ajuste conforme necessário
   pull_request:
     branches:
-      - main
-  schedule:
-    - cron: "0 9,12,15,18 * * 1,2,3,4,5"
-  workflow_dispatch:
+      - main  # ajuste conforme necessário
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.3.0
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.0
 
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-          gem install faker site_prism report_builder
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        bundle install
 
-      - name: Create results directory
-        run: mkdir -p results
+    - name: Run tests
+      run: |
+        # Comando para executar os testes automatizados, por exemplo:
+        bundle exec rspec
 
-      - name: Run RSpec
-        run: bundle exec rspec
-
-      - name: Run Cucumber
-        run: bundle exec cucumber
-
-      - name: Run Cucumber with Faker and SitePrism
-        run: bundle exec cucumber
-
-      - name: Generate Report using ReportBuilder
-        run: ruby features/support/hooks.rb
-
-      - name: Create log directory
-        run: mkdir -p log
-
-      - name: Run Tests and Generate JSON Report
-        run: |
-          cucumber --format json -o log/report.json
-
-      - name: Generate HTML Report
-        run: cucumber
-
-      - name: Store HTML Report as Artifact
-        uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with: 
-          name: cucumber-html-report
-          path: results/report.html
+    - name: Generate YAML report
+      run: |
+        # Execute o script que gera o relatório YAML usando report_builder
+        ruby features/support/hooks.rb
