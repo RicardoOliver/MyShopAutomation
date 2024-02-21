@@ -23,12 +23,12 @@ CONFIG = YAML.load_file(File.dirname(__FILE__) + "/ambientes/#{AMBIENTE}.yml")
 # Configura o tipo de browser
 Capybara.register_driver :selenium do |app|
   if BROWSER.eql?('chrome')
-    options = Selenium::WebDriver::Chrome::Options.new(args: ['--start-fullscreen', '--disable-infobars'])
-    #options = Selenium::WebDriver::Chrome::Options.new(args: ['--start-fullscreen', '--disable-infobars', '--headless'])
+    #options = Selenium::WebDriver::Chrome::Options.new(args: ['--start-fullscreen', '--disable-infobars'])
+    options = Selenium::WebDriver::Chrome::Options.new(args: ['--start-fullscreen', '--disable-infobars', '--headless'])
     Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
   elsif BROWSER.eql?('firefox')
-    options = Selenium::WebDriver::Firefox::Options.new(args: ['--start-fullscreen', '--disable-infobars'])
-    #options = Selenium::WebDriver::Firefox::Options.new(args: ['--start-fullscreen', '--disable-infobars', '--headless'])
+    #options = Selenium::WebDriver::Firefox::Options.new(args: ['--start-fullscreen', '--disable-infobars'])
+    options = Selenium::WebDriver::Firefox::Options.new(args: ['--start-fullscreen', '--disable-infobars', '--headless'])
     Capybara::Selenium::Driver.new(app, browser: :firefox, options: options)
   end
 end
