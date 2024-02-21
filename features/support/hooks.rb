@@ -1,10 +1,13 @@
 require 'report_builder'
 require 'date'
+# Importa as bibliotecas necessárias
+require 'cucumber'
 
-# Método para alterar o nome da screenshot e direcionar se o teste falhou ou não
+# Define o método After para execução após cada cenário
 After do |scenario|
   scenario_name = scenario.name.gsub(/\s+/, '_').tr('/', '_')
 
+  # Verifica se o cenário falhou e tira uma foto correspondente
   if scenario.failed?
     tirar_foto(scenario_name.downcase, 'falhou')
   else
@@ -36,3 +39,4 @@ at_exit do
   # Gera o relatório de teste usando as opções definidas acima
   ReportBuilder.build_report
 end
+
