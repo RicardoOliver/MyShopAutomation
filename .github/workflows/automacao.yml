@@ -32,3 +32,9 @@ jobs:
     - name: Run tests and generate JSON report
       run: |
         cucumber -t @Regressao --format json --out log/report/final_report.json
+
+    - name: Download report
+      uses: actions/upload-artifact@v2
+      with:
+        name: final_report
+        path: log/report/final_report.json
