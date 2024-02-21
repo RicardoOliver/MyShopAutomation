@@ -1,9 +1,7 @@
-require 'report_builder'
-require 'date'
-# Importa as bibliotecas necessárias
+# Importe as bibliotecas necessárias
 require 'cucumber'
 
-# Define o método After para execução após cada cenário
+# Defina o método After para execução após cada cenário
 After do |scenario|
   scenario_name = scenario.name.gsub(/\s+/, '_').tr('/', '_')
 
@@ -15,12 +13,12 @@ After do |scenario|
   end
 end
 
-# Define um bloco de código a ser executado quando o processo terminar
+# Defina um bloco de código a ser executado quando o processo terminar
 at_exit do
-  # Obtém a data atual no formato dia-mês-ano
+  # Obtenha a data atual no formato dia-mês-ano
   t = Time.now.strftime("%d-%m-%Y")
 
-  # Define informações adicionais para o relatório de teste
+  # Defina informações adicionais para o relatório de teste
   infos = {
     "Dispositivo" => "WEB",
     "Data do Teste" => t
@@ -36,7 +34,7 @@ at_exit do
     config.color = "blue"
   end
 
-  # Gera o relatório de teste usando as opções definidas acima
+  # Gere o relatório de teste usando as opções definidas acima
   ReportBuilder.build_report
 end
 
