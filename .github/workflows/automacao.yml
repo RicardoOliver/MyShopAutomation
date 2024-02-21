@@ -38,4 +38,4 @@ jobs:
       with:
         name: test_reports
         path: |
-          log/report/report.html
+          log/report.html
