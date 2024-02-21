@@ -1,9 +1,7 @@
-# metodo para alterar o nome da screenshot
-# e direcionar se o teste falhou ou nao
-# Define as dependências necessárias para a criação do relatório de teste
-require "report_builder"
-require "date"
+require 'report_builder'
+require 'date'
 
+# Método para alterar o nome da screenshot e direcionar se o teste falhou ou não
 After do |scenario|
   scenario_name = scenario.name.gsub(/\s+/, '_').tr('/', '_')
 
@@ -20,9 +18,9 @@ at_exit do
   t = Time.now.strftime("%d-%m-%Y")
 
   # Define informações adicionais para o relatório de teste
-  @infos = {
+  infos = {
     "Dispositivo" => "WEB",
-    "Data do Teste" => t,
+    "Data do Teste" => t
   }
 
   # Configura o ReportBuilder com as opções apropriadas
@@ -31,7 +29,7 @@ at_exit do
     config.report_path = "log/report_#{t}"
     config.report_types = [:html]
     config.report_title = "Bradoc - Testes Automatizados"
-    config.additional_info = @infos
+    config.additional_info = infos
     config.color = "blue"
   end
 
