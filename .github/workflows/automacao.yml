@@ -43,7 +43,7 @@ jobs:
         run: bundle exec cucumber
 
       - name: Generate Report using ReportBuilder
-        run: ruby generate_report.rb
+        run: ruby hooks.rb
 
       - name: Create log directory
         run: mkdir -p log
