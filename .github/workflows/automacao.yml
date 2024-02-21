@@ -49,15 +49,12 @@ jobs:
       - name: Run Cucumber with Faker and SitePrism
         run: bundle exec cucumber
 
+      - name: Install dependencies
+        run: |
+         gem install report_builder
+
       - name: Generate Report
-        if: always()
         run: |
          t=$(date +"%d-%m-%Y")
-         report-builder --input-path log/report.json --report-path log/report_$t --report-types html --report-title "Bradoc - Testes Automatizados" --additional-info "Dispositivo: WEB, Data do Teste: $t" --color blue
-
-      - name: Upload Report Artifact
-        uses: actions/upload-artifact@v2
-        with:
-         name: test-report
-         path: log/report_$t
+         ruby generate_report.rb
 
