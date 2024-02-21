@@ -2,12 +2,14 @@
 require 'cucumber'
 require 'report_builder'
 
-# Defina o método After para execução após cada cenário
+# Defina um bloco de código a ser executado após cada cenário
 After do |scenario|
-  scenario_name = scenario.name.gsub(/\s+/, '_').tr('/', '_')
-
-  # Simula a função de tirar foto (substitua com sua própria lógica)
-  tirar_foto(scenario_name.downcase, scenario.failed? ? 'falhou' : 'passou')
+  if scenario.failed?
+    # Simula a função de tirar foto em caso de falha (substitua com sua própria lógica)
+    tirar_foto(scenario.name.downcase.gsub(/\s+/, '_'), 'falhou')
+  else
+    tirar_foto(scenario.name.downcase.gsub(/\s+/, '_'), 'passou')
+  end
 end
 
 # Defina um bloco de código a ser executado quando o processo terminar
